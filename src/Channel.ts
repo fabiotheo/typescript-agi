@@ -109,6 +109,66 @@ export class Channel extends EventEmitter {
     }
 
     /**
+     * Event that is emitted when the underlying socket encounters an error
+     * @param event
+     * @param listener
+     */
+    public on(event: 'error', listener: (error: any) => void): this;
+
+    /**
+     * Event that is emitted when the underlying socket is closed
+     * @param event
+     * @param listener
+     */
+    public on(event: 'close', listener: () => void): this;
+
+    /**
+     * Event that emitted when the underlying socket times out
+     * @param event
+     * @param listener
+     */
+    public on(event: 'timeout', listener: () => void): this;
+
+    /**
+     * Event that is emitted when the channel is ready
+     * @param event
+     * @param listener
+     */
+    public on(event: 'ready', listener: () => void): this;
+
+    /**
+     * Event that is emitted when a response is received from the Asterisk server
+     * @param event
+     * @param listener
+     */
+    public on(event: 'recv', listener: (response: string) => void): this;
+
+    /**
+     * Event that emitted when the channel is hung up
+     * @param event
+     * @param listener
+     */
+    public on(event: 'hangup', listener: () => void): this;
+
+    /**
+     * Event that emitted when the response from the Asterisk server is processed into a structured response
+     * @param event
+     * @param listener
+     */
+    public on(event: 'response', listener: (response: IResponse) => void): this;
+
+    /**
+     * Event that is emitted when data is sent to the Asterisk server
+     * @param event
+     * @param listener
+     */
+    public on(event: 'send', listener: (data: string) => void): this;
+
+    public on(event: any, listener: (...args: any[]) => void): this {
+        return super.on(event, listener);
+    }
+
+    /**
      * Whether this AGI request is over the network
      */
     public get network(): boolean {

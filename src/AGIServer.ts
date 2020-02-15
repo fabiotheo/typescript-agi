@@ -35,6 +35,38 @@ export class AGIServer extends EventEmitter {
     }
 
     /**
+     * Event that is emitted when a new AGI channel has been established and is ready for interation
+     * @param event
+     * @param listener
+     */
+    public on(event: 'channel', listener: (channel: Channel) => void): this;
+
+    /**
+     * Event that is emitted when the AGI server is started and in a listening state
+     * @param event
+     * @param listener
+     */
+    public on(event: 'listening', listener: (port: number, ip: string) => void): this;
+
+    /**
+     * Event that is emitted when the server encounters and error
+     * @param event
+     * @param listener
+     */
+    public on(event: 'error', listener: (error: any) => void): this;
+
+    /**
+     * Event that emitted when the server is closed and stopped
+     * @param event
+     * @param listener
+     */
+    public on(event: 'close', listener: () => void): this;
+
+    public on(event: any, listener: (...args: any[]) => void): this {
+        return super.on(event, listener);
+    }
+
+    /**
      * Starts the AGI server
      */
     public async start(): Promise<void> {
