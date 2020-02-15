@@ -1,0 +1,36 @@
+{
+  "name": "typescript-agi",
+  "version": "0.0.1",
+  "description": "NodeJS TypeScript Library for Asterisk AGI Interfaces",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "./node_modules/.bin/tsc",
+    "docs": "./node_modules/.bin/typedoc && touch docs/.nojekyll",
+    "docs-server": "./node_modules/.bin/http-server docs",
+    "fix-style": "./node_modules/.bin/tslint -c tslint.json --project . --fix",
+    "host-docs": "npm run docs && npm run docs-server",
+    "install": "npm run build",
+    "style": "./node_modules/.bin/tslint -c tslint.json --project .",
+    "test": "npm run style && npm run build"
+  },
+  "author": "Brandon Lehmann <brandonlehmann@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.7.1",
+    "tslint": "^6.0.0",
+    "typedoc": "^0.16.9",
+    "typescript": "^3.7.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandonlehmann/typescript-agi.git"
+  },
+  "homepage": "https://github.com/brandonlehmann/typescript-agi#readme",
+  "bugs": {
+    "url": "https://github.com/brandonlehmann/typescript-agi/issues"
+  },
+  "dependencies": {
+    "http-server": "^0.12.1"
+  }
+}
