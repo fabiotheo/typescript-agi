@@ -8,8 +8,7 @@
     "build": "./node_modules/.bin/tsc",
     "docs": "./node_modules/.bin/typedoc && touch docs/.nojekyll",
     "fix-style": "./node_modules/.bin/tslint -c tslint.json --project . --fix",
-    "install": "npm run build",
-    "prepublishOnly": "npm run build",
+    "prepare": "npm run build",
     "style": "./node_modules/.bin/tslint -c tslint.json --project .",
     "test": "npm run style && npm run build"
   },
