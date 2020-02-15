@@ -1,8 +1,10 @@
 # Welcome to typescript-agi 👋
-![Version](https://img.shields.io/badge/version-0.0.1-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.0.5-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://brandonlehmann.github.io/typescript-agi/)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/brandonlehmann/typescript-agi/graphs/commit-activity)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/brandonlehmann/typescript-agi/blob/master/LICENSE)
+
+[![NPM](https://nodei.co/npm/typescript-agi.png?downloads=true&stars=true)](https://nodei.co/npm/typescript-agi/)
 
 > NodeJS TypeScript Library for Asterisk AGI Interfaces
 
@@ -23,15 +25,20 @@ npm run test
 ## Example Usage
 
 ```typescript
-import {AGIServer, Channel} from 'typescript-agi';
+import {
+    AGIServer, 
+    Channel
+} from 'typescript-agi';
 
 const agiServer = new AGIServer();
 
-agiServer.on('channel', async(channel) => {
+agiServer.on('channel', async(channel: Channel) => {
     await channel.answer();
     await channel.sayNumber(12345);
     await channel.hangup();
-})
+});
+
+agiServer.start();
 ````
 
 ## Documentation

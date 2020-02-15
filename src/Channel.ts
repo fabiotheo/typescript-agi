@@ -42,6 +42,9 @@ export enum DialStatus {
     INVALIDARGS,
 }
 
+/**
+ * Represents the playback status
+ */
 export enum PlaybackStatus {
     SUCCESS,
     USER_STOPPED,
