@@ -1,6 +1,6 @@
 {
   "name": "typescript-agi",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "NodeJS TypeScript Library for Asterisk AGI Interfaces",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,10 +15,10 @@
   "author": "Brandon Lehmann <brandonlehmann@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^13.13.4",
+    "@types/node": "^13.13.14",
     "tslint": "^6.1.2",
     "typedoc": "^0.16.9",
-    "typescript": "^3.7.5"
+    "typescript": "^3.9.7"
   },
   "repository": {
     "type": "git",
