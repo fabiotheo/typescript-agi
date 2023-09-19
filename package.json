@@ -1,6 +1,6 @@
 {
-  "name": "typescript-agi",
-  "version": "0.0.7",
+  "name": "typescript-agi-ipcom",
+  "version": "0.0.1",
   "description": "NodeJS TypeScript Library for Asterisk AGI Interfaces",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
     "style": "./node_modules/.bin/tslint -c tslint.json --project .",
     "test": "npm run style && npm run build"
   },
-  "author": "Brandon Lehmann <brandonlehmann@gmail.com>",
+  "author": "Fábio Theodoro <fabio@ipcom.com.br>",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^13.13.14",
@@ -22,10 +22,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brandonlehmann/typescript-agi.git"
+    "url": "git+https://github.com/fabiotheo/typescript-agi.git"
   },
-  "homepage": "https://github.com/brandonlehmann/typescript-agi#readme",
+  "homepage": "https://github.com/fabiotheo/typescript-agi#readme",
   "bugs": {
-    "url": "https://github.com/brandonlehmann/typescript-agi/issues"
+    "url": "https://github.com/fabiotheo/typescript-agi/issues"
   }
 }

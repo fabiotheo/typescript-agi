@@ -1,5 +1,5 @@
 {
-    "name": "typescript-agi",
+    "name": "typescript-agi-ipcom",
     "out": "./docs",
     "excludeExternals": true,
     "excludeNotExported": true,
