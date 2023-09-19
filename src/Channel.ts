@@ -1441,6 +1441,7 @@ export class Channel extends EventEmitter {
     }
 
 
+    /*
     private async sendCommand(command: string): Promise<IResponse> {
         return new Promise(async (resolve) => {
             this.once('response', (response: IResponse) => {
@@ -1452,4 +1453,25 @@ export class Channel extends EventEmitter {
             ));
         });
     }
+     */
+
+    private async sendCommand(command: string): Promise<IResponse> {
+        return new Promise(async (resolve, reject) => {
+            // Verificar se a conexão ainda está ativa
+            if (!this.m_connection || this.m_connection.destroyed) {
+                return reject(new Error('Stream has been destroyed'));
+            }
+
+            this.once('response', (response: IResponse) => {
+                return resolve(response);
+            });
+
+            try {
+                await this.send(format('%s\n', command.trim()));
+            } catch (err) {
+                return reject(err);
+            }
+        });
+    }
+
 }
