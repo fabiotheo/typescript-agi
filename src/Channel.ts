@@ -73,7 +73,7 @@ export class Channel extends EventEmitter {
   private m_channel: string = '';
   private m_language: string = '';
   private m_type: string = '';
-private m_uniqueid: string = '';
+  private m_uniqueid: string = '';
   private m_version: string = '';
   private m_callerid: string = '';
   private m_calleridname: string = '';
@@ -86,9 +86,11 @@ private m_uniqueid: string = '';
   private m_context: string = '';
   private m_extension: string = '';
   private m_priority: string = '';
-private m_enhanced: string = '';
+  private m_enhanced: string = '';
   private m_accountcode: string = '';
   private m_threadid: string = '';
+  private m_args: string[] = [];
+
 
   /**
      * Creates a new instance of a channel object
@@ -191,7 +193,7 @@ private m_enhanced: string = '';
     return this.m_version;
   }
 
-/**
+  /**
      * The filename of your script
      * ie. agi
      */
@@ -204,7 +206,7 @@ private m_enhanced: string = '';
      */
   public get channel(): string {
     return this.m_channel;
-}
+  }
 
   /**
      * The language code (e.g. “en”)
@@ -332,7 +334,7 @@ private m_enhanced: string = '';
     const response = await this.sendCommand('ANSWER');
 
     if (response.code !== 200 || response.result !== 0) {
-throw new Error('Could not answer call');
+      throw new Error('Could not answer call');
     }
   }
 
@@ -618,8 +620,8 @@ throw new Error('Could not answer call');
   }
 
   /**
-* Stream file, prompt for DTMF, with timeout.
-* Behaves similar to STREAM FILE but used with a timeout option.
+     * Stream file, prompt for DTMF, with timeout.
+     * Behaves similar to STREAM FILE but used with a timeout option.
      * @param soundFile
      * @param escapeDigits
      * @param timeout
@@ -1233,7 +1235,7 @@ throw new Error('Could not answer call');
   }
 
   /**
-* Logs a message to the asterisk verbose log.
+     * Logs a message to the asterisk verbose log.
      * @param message
      * @param level
      */
@@ -1308,7 +1310,6 @@ throw new Error('Could not answer call');
       const value: string = (split[1] || '').trim();
 
       const id = name.substring(4);
-      // Add a default case and in that case, log the variable name and value
       switch (id) {
         case 'network':
           return this.m_network = value;
@@ -1355,7 +1356,11 @@ throw new Error('Could not answer call');
         case 'threadid':
           return this.m_threadid = value;
         default:
-          console.log('Unhandled variable:', id, value);
+          // if "id" is like "arg_N", then store the value in "m_args[N]"
+          if (id.indexOf('arg_') === 0) {
+            const n = parseInt(id.substring(4), 10);
+            return this.m_args[n] = value;
+          }  
       }
     });
 
@@ -1410,7 +1415,7 @@ throw new Error('Could not answer call');
 
     this.emit('response', response);
   }
- 
+
   private async send(message: string): Promise<void> {
     return new Promise((resolve, reject) => {
       // Verificar se a conexão ainda está ativa
@@ -1429,28 +1434,22 @@ throw new Error('Could not answer call');
   }
 
 
-  private sendCommand(command: string): Promise<IResponse> {
-    return new Promise((resolve, reject) => {
-      // Check if the connection is still active
+  private async sendCommand(command: string): Promise<IResponse> {
+    return new Promise(async (resolve, reject) => {
+      // Verificar se a conexão ainda está ativa
       if (!this.m_connection || this.m_connection.destroyed) {
-        reject(new Error('Stream has been destroyed'));
-        return;
+        return reject(new Error('Stream has been destroyed'));
       }
 
       this.once('response', (response: IResponse) => {
-        resolve(response);
+        return resolve(response);
       });
 
-      // Send the command without awaiting it, but handle the promise with .then() and .catch()
-      this.send(format('s\n', command.trim()))
-        .then(() => {
-          // If needed, handle successful send here
-          // Note: The resolution is handled by the 'response' event listener above
-        })
-        .catch(err => {
-          reject(err);
-        });
+      try {
+        await this.send(format('%s\n', command.trim()));
+      } catch (err) {
+        return reject(err);
+      }
     });
   }
-
 }
