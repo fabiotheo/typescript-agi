@@ -1,5 +1,6 @@
 {
   "name": "typescript-agi-ipcom",
+  "type": "module",
   "version": "0.0.2",
   "description": "NodeJS TypeScript Library for Asterisk AGI Interfaces",
   "main": "dist/index.js",
@@ -7,18 +8,17 @@
   "scripts": {
     "build": "./node_modules/.bin/tsc",
     "docs": "./node_modules/.bin/typedoc && touch docs/.nojekyll",
-    "fix-style": "./node_modules/.bin/tslint -c tslint.json --project . --fix",
-    "prepare": "npm run build",
-    "style": "./node_modules/.bin/tslint -c tslint.json --project .",
+    "style": "./node_modules/.bin/eslint .",
     "test": "npm run style && npm run build"
   },
   "author": "Fábio Theodoro <fabio@ipcom.com.br>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^13.13.14",
-    "tslint": "^6.1.2",
-    "typedoc": "^0.16.9",
-    "typescript": "^3.9.7"
+    "@types/node": "^20.11.24",
+    "eslint": "^8.57.0",
+    "typedoc": "^0.25.11",
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^7.1.1"
   },
   "repository": {
     "type": "git",
