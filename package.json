@@ -12,7 +12,10 @@
     "start": "node dist/esm/index.js",
     "docs": "./node_modules/.bin/typedoc && touch docs/.nojekyll"
   },
-  "author": "Brandon Lehmann <brandonlehmann@gmail.com>",
+  "author": "Fabio Theodoro <fabio@ipcom.com.br>",
+  "contributors": [
+    "Brandon Lehmann <brandonlehmann@gmail.com> (original author)"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@eslint/js": "^9.36.0",
@@ -28,10 +31,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/brandonlehmann/typescript-agi.git"
+    "url": "git+https://github.com/ipcomtelecom/typescript-agi-ipcom.git"
   },
-  "homepage": "https://github.com/brandonlehmann/typescript-agi#readme",
+  "homepage": "https://github.com/ipcomtelecom/typescript-agi-ipcom#readme",
   "bugs": {
-    "url": "https://github.com/brandonlehmann/typescript-agi/issues"
+    "url": "https://github.com/ipcomtelecom/typescript-agi-ipcom/issues"
   }
 }
