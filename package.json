@@ -1,9 +1,9 @@
 {
-  "name": "typescript-agi",
-  "version": "0.0.7",
+  "name": "typescript-agi-ipcom",
+  "version": "0.0.8-beta.8",
   "type": "module",
   "description": "NodeJS TypeScript Library for Asterisk AGI Interfaces",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.js",
   "scripts": {
