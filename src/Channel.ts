@@ -607,31 +607,16 @@ export class Channel extends EventEmitter {
       ? format('GET DATA %s %s %s', soundFile, timeout, maxDigits)
       : format('GET DATA %s %s', soundFile, timeout);
 
-    console.log('[getData] DEBUG - Command:', command);
-    console.log('[getData] DEBUG - Params:', { soundFile, timeout, maxDigits });
-
     const response = await this.sendCommand(command);
-
-    console.log('[getData] DEBUG - Response:', {
-      code: response.code,
-      result: response.result,
-      arguments: response.arguments,
-      rawResult: response.arguments.string('result'),
-      rawValue: response.arguments.string('value'),
-    });
 
     if (response.code !== 200 || response.result === -1) {
       throw new Error('Could not get data from channel');
     }
 
-    const result = {
+    return {
       digits: response.arguments.string('result'),
       timeout: response.arguments.string('value') === '(timeout)',
     };
-
-    console.log('[getData] DEBUG - Final result:', result);
-
-    return result;
   }
 
   /**
@@ -647,13 +632,6 @@ export class Channel extends EventEmitter {
     maxDigits: number,
     interDigitTimeout: number
   ): Promise<{ digits: string; timeout: boolean }> {
-    console.log('[getDataWithInterDigitTimeout] DEBUG - Starting collection', {
-      soundFile,
-      totalTimeout,
-      maxDigits,
-      interDigitTimeout,
-    });
-
     let collectedDigits = '';
 
     // Play the sound file first, allowing any digit to interrupt
@@ -669,28 +647,19 @@ export class Channel extends EventEmitter {
         // If user pressed a digit during playback, collect it
         if (digit) {
           collectedDigits += digit;
-          console.log('[getDataWithInterDigitTimeout] DEBUG - Digit pressed during playback:', digit);
 
           // If we already have max digits, return immediately
           if (collectedDigits.length === maxDigits) {
-            console.log('[getDataWithInterDigitTimeout] DEBUG - Max digits reached during playback');
             return { digits: collectedDigits, timeout: false };
           }
         }
       }
     } catch (error) {
-      console.log('[getDataWithInterDigitTimeout] DEBUG - Error playing file:', error);
       // Continue even if file fails to play
     }
 
     // Start timing AFTER audio finishes - totalTimeout only applies to digit collection
     const startTime = Date.now();
-
-    console.log('[getDataWithInterDigitTimeout] DEBUG - Audio finished, waiting for remaining digits', {
-      collectedDigits,
-      totalTimeout,
-      interDigitTimeout,
-    });
 
     // Collect remaining digits one by one with inter-digit timeout
     while (collectedDigits.length < maxDigits) {
@@ -698,18 +667,11 @@ export class Channel extends EventEmitter {
       const remainingTotalTimeout = totalTimeout - elapsedTime;
 
       if (remainingTotalTimeout <= 0) {
-        console.log('[getDataWithInterDigitTimeout] DEBUG - Total timeout exceeded');
         return { digits: collectedDigits, timeout: collectedDigits.length === 0 };
       }
 
       // Use the smaller of inter-digit timeout or remaining total timeout
       const timeoutToUse = Math.min(interDigitTimeout, remainingTotalTimeout);
-
-      console.log('[getDataWithInterDigitTimeout] DEBUG - Waiting for digit', {
-        collectedSoFar: collectedDigits,
-        timeoutToUse,
-        remainingTotalTimeout,
-      });
 
       try {
         // Convert milliseconds to seconds for waitForDigit
@@ -717,19 +679,15 @@ export class Channel extends EventEmitter {
 
         if (!digit) {
           // Timeout waiting for digit
-          console.log('[getDataWithInterDigitTimeout] DEBUG - Inter-digit timeout');
           return { digits: collectedDigits, timeout: collectedDigits.length === 0 };
         }
 
         collectedDigits += digit;
-        console.log('[getDataWithInterDigitTimeout] DEBUG - Digit collected:', digit);
 
         if (collectedDigits.length === maxDigits) {
-          console.log('[getDataWithInterDigitTimeout] DEBUG - Max digits reached');
           return { digits: collectedDigits, timeout: false };
         }
       } catch (error) {
-        console.log('[getDataWithInterDigitTimeout] DEBUG - Error waiting for digit:', error);
         return { digits: collectedDigits, timeout: true };
       }
     }
@@ -1646,13 +1604,9 @@ export class Channel extends EventEmitter {
         return reject(new Error('Channel is no longer alive'));
       }
 
-      console.log('[sendCommandInternal] DEBUG - Sending command:', command);
-      console.log('[sendCommandInternal] DEBUG - Timeout:', timeout);
-
       let timeoutId: NodeJS.Timeout | null = null;
 
       const responseHandler = (response: IResponse) => {
-        console.log('[sendCommandInternal] DEBUG - Received response:', response);
         cleanup();
         resolve(response);
       };
