@@ -1,24 +1,30 @@
 {
   "name": "typescript-agi",
   "version": "0.0.7",
+  "type": "module",
   "description": "NodeJS TypeScript Library for Asterisk AGI Interfaces",
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
   "scripts": {
-    "build": "./node_modules/.bin/tsc",
-    "docs": "./node_modules/.bin/typedoc && touch docs/.nojekyll",
-    "fix-style": "./node_modules/.bin/tslint -c tslint.json --project . --fix",
-    "prepare": "npm run build",
-    "style": "./node_modules/.bin/tslint -c tslint.json --project .",
-    "test": "npm run style && npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js",
+    "start": "node dist/esm/index.js",
+    "docs": "./node_modules/.bin/typedoc && touch docs/.nojekyll"
   },
   "author": "Brandon Lehmann <brandonlehmann@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^13.13.14",
-    "tslint": "^6.1.2",
-    "typedoc": "^0.16.9",
-    "typescript": "^3.9.7"
+    "@eslint/js": "^9.36.0",
+    "@types/node": "^24.6.0",
+    "esbuild": "^0.25.10",
+    "eslint": "^9.36.0",
+    "globals": "^16.4.0",
+    "jiti": "^2.6.0",
+    "prettier": "3.6.2",
+    "typedoc": "^0.28.13",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.45.0"
   },
   "repository": {
     "type": "git",
